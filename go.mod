@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/log v0.2.2
 	github.com/google/go-cmp v0.5.9
 	github.com/spf13/cobra v1.7.0
-	github.com/vartanbeno/go-reddit/v2 v2.0.0
+	github.com/vartanbeno/go-reddit/v2 v2.0.1
 	golang.org/x/sync v0.2.0
 )
 
