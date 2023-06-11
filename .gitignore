@@ -19,6 +19,6 @@
 
 # Go workspace file
 go.work
-reddit-dl
+reddit-downloader
 .envrc
 output

@@ -1,4 +1,4 @@
-// Package cmd is a package that contains subcommands for the reddit-dl CLI command.
+// Package cmd is a package that contains subcommands for the reddit-downloader CLI command.
 package cmd
 
 import (
@@ -21,9 +21,9 @@ import (
 
 func newRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "reddit-dl ",
-		Short: "reddit-dl downloads images from Reddit.",
-		Long: `reddit-dl downloads images from Reddit.
+		Use:   "reddit-downloader ",
+		Short: "reddit-downloader downloads images from Reddit.",
+		Long: `reddit-downloader downloads images from Reddit.
 
 You need to set the following environment variables:
   - GO_REDDIT_CLIENT_ID: to set the client's id.
@@ -45,7 +45,7 @@ You need to set the following environment variables:
 	return cmd
 }
 
-// download is a main function of reddit-dl command.
+// download is a main function of reddit-downloader command.
 func download(cmd *cobra.Command, _ []string) error {
 	downloader, err := newDownloader(cmd)
 	if err != nil {
@@ -54,7 +54,7 @@ func download(cmd *cobra.Command, _ []string) error {
 	return downloader.download()
 }
 
-// downloader is a main function of reddit-dl command.
+// downloader is a main function of reddit-downloader command.
 type downloader struct {
 	*reddit.Client
 	opt *option
@@ -139,7 +139,7 @@ func (d *downloader) getPosts(subRedditName string) ([]*reddit.Post, error) {
 	return posts, nil
 }
 
-// option is a option for the reddit-dl command.
+// option is a option for the reddit-downloader command.
 type option struct {
 	// subReddits is a subreddit name to download images.
 	subReddits []string

@@ -1,4 +1,4 @@
-module github.com/nao1215/reddit-dl
+module github.com/nao1215/reddit-downloader
 
 go 1.20
 

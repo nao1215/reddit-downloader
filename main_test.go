@@ -1,4 +1,4 @@
-// Package main is reddit-dl command entrypoint.
+// Package main is reddit-downloader command entrypoint.
 package main
 
 import (
@@ -20,7 +20,7 @@ func TestMain(t *testing.T) {
 		}()
 
 		os.Args = []string{
-			"reddit-dl",
+			"reddit-downloader",
 			"version",
 		}
 		main() // Run test
@@ -41,7 +41,7 @@ func TestMain(t *testing.T) {
 		}()
 
 		os.Args = []string{
-			"reddit-dl",
+			"reddit-downloader",
 			"non-existent",
 		}
 		main() // Run test

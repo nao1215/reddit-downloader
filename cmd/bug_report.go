@@ -13,7 +13,7 @@ func newBugReportCmd() *cobra.Command {
 		Use:     "bug-report",
 		Short:   "Submit a bug report at GitHub",
 		Long:    "bug-report opens the default browser to start a bug report which will include useful system information.",
-		Example: "   reddit-dl bug-report",
+		Example: "   reddit-downloader bug-report",
 		RunE:    bugReport,
 	}
 }
@@ -38,7 +38,7 @@ Expected behavior.
 Any other useful data to share.
 `
 	)
-	buf.WriteString(fmt.Sprintf("## reddit-dl version\n%s\n\n", cmd.Version))
+	buf.WriteString(fmt.Sprintf("## reddit-downloader version\n%s\n\n", cmd.Version))
 	buf.WriteString(description)
 	buf.WriteString(toReproduce)
 	buf.WriteString(expectedBehavior)
