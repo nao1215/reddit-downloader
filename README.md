@@ -40,9 +40,7 @@ media downloaded: Meteor Strike. (output/MobileWallpaper/13waxm0_Meteor_Strike..
 ```
 
 If a post does not contain an image, it will be skipped. Furthermore, it is not possible to download the images from the gallery.
-```
-2023/06/11 16:05:07 INFO skipped: Title:'Bad post' does not have image
-```
+
 
 ## Contributing
 Contributions are welcome. Contributions are not only related to development. For example, GitHub Star motivates me to develop!
