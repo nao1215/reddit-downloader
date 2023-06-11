@@ -1,5 +1,5 @@
-# reddit-dl - Reddit images downloader in golang
-
+# reddit-dl - Reddit images downloader
+`reddit-dl` is a CLI command that downloads images from posts within a subreddit. It allows you to specify multiple subreddits in a single execution. Thanks to parallelization, downloading with `reddit-dl` enables you to gather images quickly.
 
 
 ## How to install

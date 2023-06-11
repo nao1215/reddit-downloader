@@ -7,6 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.9
 	github.com/spf13/cobra v1.7.0
 	github.com/vartanbeno/go-reddit/v2 v2.0.0
+	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 )
 
 require (
@@ -26,7 +27,6 @@ require (
 	github.com/stretchr/testify v1.8.4 // indirect
 	golang.org/x/net v0.0.0-20190620200207-3b0461eec859 // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 )
