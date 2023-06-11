@@ -53,8 +53,10 @@ If you would like to send comments such as "find a bug" or "request for addition
 - [GitHub Issue](https://github.com/nao1215/reddit-downloader/issues)
 You can use the bug-report subcommand to send a bug report.
 
+```
 $ reddit-downloader bug-report
 ※ Open GitHub issue page by your default browser
+```
 
 ## LICENSE
 The reddit-downloader project is licensed under the terms of [MIT LICENSE](./LICENSE)
