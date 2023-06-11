@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 	"github.com/vartanbeno/go-reddit/v2/reddit"
 	"golang.org/x/sync/semaphore"
@@ -80,12 +79,14 @@ func newDownloader(cmd *cobra.Command) (*downloader, error) {
 func (d *downloader) download() error {
 	postInSubReddits := make(map[string][]*reddit.Post)
 	for _, v := range d.opt.subReddits {
+		fmt.Fprintf(os.Stdout, "fetching posts from '%s' sub reddit\n", v)
 		posts, err := d.getPosts(v)
 		if err != nil {
 			return err
 		}
 		postInSubReddits[v] = posts
 	}
+	fmt.Println()
 
 	var wg sync.WaitGroup
 	sem := semaphore.NewWeighted(int64(runtime.NumCPU()))
@@ -99,7 +100,11 @@ func (d *downloader) download() error {
 				continue
 			}
 			if !isURLImage(post.URL) {
-				log.Info(fmt.Sprintf("skipped: Title:'%s' does not have image", post.Title))
+				if isRedditGalleryURL(post.URL) {
+					fmt.Fprintf(os.Stdout, fmt.Sprintf("skipped: Title:'%s': not support reddit gallery (URL:%s)\n", post.Title, post.URL))
+				} else {
+					fmt.Fprintf(os.Stdout, fmt.Sprintf("skipped: Title:'%s' does not have image (URL:%s)\n", post.Title, post.URL))
+				}
 				continue
 			}
 
@@ -108,7 +113,7 @@ func (d *downloader) download() error {
 				defer wg.Done()
 
 				if err := sem.Acquire(context.Background(), 1); err != nil {
-					log.Error("failed to acquire semaphore token: %v\n", err)
+					fmt.Fprintf(os.Stderr, "failed to acquire semaphore token: %v\n", err)
 					return
 				}
 				defer sem.Release(1)
@@ -116,9 +121,9 @@ func (d *downloader) download() error {
 				out := filepath.Join(d.opt.outputDir, subRedditName, generateFileName(post))
 				err := downloadMedia(post.URL, out)
 				if err != nil {
-					log.Error("failed to download media: %v\n", err)
+					fmt.Fprintf(os.Stderr, "failed to download media: %v\n", err)
 				}
-				fmt.Printf("media downloaded: %s (%s)\n", post.Title, out)
+				fmt.Fprintf(os.Stdout, "media downloaded: %s (%s)\n", post.Title, out)
 			}(subRedditName, post)
 		}
 	}
@@ -172,7 +177,7 @@ func newOption(cmd *cobra.Command) (*option, error) {
 func Execute() int {
 	rootCmd := newRootCmd()
 	if err := rootCmd.Execute(); err != nil {
-		log.Error(err)
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		return 1
 	}
 	return 0
@@ -180,11 +185,9 @@ func Execute() int {
 
 // generateFileName generates a file path for the image.
 func generateFileName(post *reddit.Post) string {
-	ext := filepath.Ext(post.URL)
 	title := strings.Replace(post.Title, " ", "_", -1)
 	title = strings.Replace(title, "/", "_", -1)
-	filename := fmt.Sprintf("%s_%s%s", post.ID, title, ext)
-	return filename
+	return fmt.Sprintf("%s_%s%s", post.ID, title, filepath.Ext(post.URL))
 }
 
 // downloadMedia downloads the media from the URL and saves it to the filepath.
@@ -210,12 +213,40 @@ func downloadMedia(url, filepath string) error {
 
 // isURLImage returns true if the URL is an image.
 func isURLImage(url string) bool {
-	resp, err := http.Head(url)
+	resp, err := http.Get(url)
 	if err != nil {
 		return false
 	}
 	defer resp.Body.Close()
 
-	contentType := resp.Header.Get("Content-Type")
-	return strings.Contains(contentType, "image")
+	buf := make([]byte, 512)
+	if _, err = resp.Body.Read(buf); err != nil {
+		if !errors.Is(err, io.EOF) {
+			return false
+		}
+	}
+
+	contentType := http.DetectContentType(buf)
+	if strings.Contains(contentType, "image") {
+		return true
+	}
+
+	if strings.Contains(contentType, "application/octet-stream") {
+		return hasImageExtension(url)
+	}
+	return false
+}
+
+func isRedditGalleryURL(url string) bool {
+	return strings.Contains(url, "reddit.com/gallery")
+}
+
+func hasImageExtension(url string) bool {
+	extensions := []string{".png", ".jpeg", ".jpg", ".gif", ".bmp", "gifv", "webp"}
+	for _, ext := range extensions {
+		if strings.HasSuffix(strings.ToLower(url), ext) {
+			return true
+		}
+	}
+	return false
 }

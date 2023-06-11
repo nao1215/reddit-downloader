@@ -27,18 +27,19 @@ $ export GO_REDDIT_CLIENT_USERNAME=xxxxxxxxxxxxxx ※ set your client username
 $ export GO_REDDIT_CLIENT_PASSWORD=xxxxxxxxxxxxxx ※ set your client password
 
 $ reddit-downloader --sub-reddit=wallpaper,MobileWallpaper
-media downloaded: Katana and a pistol [3840x2160] (output/wallpaper/13vq8r7_Katana_and_a_pistol_[3840x2160].jpg)
-media downloaded: Rayquaza - Dragon Ascent [3440x1440] (output/wallpaper/13u8tbe_Rayquaza_-_Dragon_Ascent_[3440x1440].jpg)
-media downloaded: May cause addiction [1600x1200] (output/wallpaper/1419ygj_May_cause_addiction_[1600x1200].png)
-media downloaded: Amazing Islands in Ocean [1920 x 1200] (output/wallpaper/13y2kim_Amazing_Islands_in_Ocean_[1920_x_1200].jpg)
-media downloaded: Miles Morales and Spider-Gwen [1920x1080] (output/wallpaper/1420iyi_Miles_Morales_and_Spider-Gwen_[1920x1080].jpg)
-media downloaded: Anime girl in bar [3840x2160] (output/wallpaper/144u2eu_Anime_girl_in_bar_[3840x2160].jpg)
-media downloaded: cat waiting for a train [1920x1080] (output/wallpaper/13jfg7t_cat_waiting_for_a_train_[1920x1080].jpg)
+fetching posts from 'wallpaper' sub reddit
+fetching posts from 'MobileWallpaper' sub reddit
+
+media downloaded: Chinese poster Spider-Man: Across the Spider-Verse (output/MobileWallpaper/13sh0r9_Chinese_poster_Spider-Man:_Across_the_Spider-Verse.jpg)
+skipped: Title:'Some from my collection of wallpapers': not support reddit gallery (URL:https://www.reddit.com/gallery/13py2gm)
+media downloaded: Memories (output/MobileWallpaper/13hggwb_Memories.jpg)
+media downloaded: Will be rocking for months to come (output/MobileWallpaper/13xbchy_Will_be_rocking_for_months_to_come.jpg)
+media downloaded: Meteor Strike. (output/MobileWallpaper/13waxm0_Meteor_Strike..jpg)
  :
  :
 ```
 
-If a post does not contain an image, it will be skipped.
+If a post does not contain an image, it will be skipped. Furthermore, it is not possible to download the images from the gallery.
 ```
 2023/06/11 16:05:07 INFO skipped: Title:'Bad post' does not have image
 ```
